@@ -13,7 +13,7 @@ import About from '..';
 afterEach(cleanup);
 
 
-describe('About component', ()=> {
+describe('About component renders', ()=> {
     //renders about test
     // First test
     // could use test('renders' .....) also
