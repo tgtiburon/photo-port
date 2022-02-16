@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import About from "./components/About";
 import Nav from "./components/Nav";
 import Gallery from "./components/Gallery";
-import ContactForm from "./components/Contact"; 
+import ContactForm from "./components/Contact";
 
 function App() {
   const [categories] = useState([
@@ -42,6 +42,8 @@ function App() {
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        contactSelected={contactSelected}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
         {/* If contactForm is not selected then show everything */}
@@ -51,9 +53,7 @@ function App() {
             <About></About>
           </>
         ) : (
-          
-            <ContactForm></ContactForm>
-
+          <ContactForm></ContactForm>
         )}
       </main>
     </div>
