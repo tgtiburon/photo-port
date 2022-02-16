@@ -19,6 +19,10 @@ function App() {
     },
   ]);
 
+  // Add a useState hook for contact form
+  // Set false so it does not show right away
+  const [contactSelected, setContactSelected] = useState(false);
+
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
   // If we wrote it without JSX
   // Returns JSX   -> Javascript XML
@@ -40,9 +44,17 @@ function App() {
         currentCategory={currentCategory}
       ></Nav>
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {/* If contactForm is not selected then show everything */}
+        {!contactSelected ? (
+          <>
+            <Gallery currentCategory={currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : (
+          
+            <ContactForm></ContactForm>
+
+        )}
       </main>
     </div>
   );
