@@ -56,9 +56,9 @@ function ContactForm() {
         </div>
 
         <div>
-          <textarea htmlFor="message">Message:</textarea>
-          <input
-            type="message"
+          <label htmlFor="message">Message:</label>
+          <textarea
+            name="message"
             defaultValue={message}
             onChange={handleChange}
             rows="5"
