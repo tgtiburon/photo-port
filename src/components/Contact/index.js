@@ -1,5 +1,7 @@
 import react, { useState } from "react";
 
+import { validateEmail } from "../../utils/helpers";
+
 // initialize the values of the state
 
 function ContactForm() {
@@ -9,6 +11,9 @@ function ContactForm() {
     message: "",
   });
 
+  // Error catching
+  const [errorMessage, setErrorMessage] = useState("");
+
   //JSX
   // destructure formState
   const { name, email, message } = formState;
@@ -16,10 +21,36 @@ function ContactForm() {
   // Change in the html
 
   function handleChange(e) {
+    // validate email
+    if (e.target.name === "email") {
+      const isValid = validateEmail(e.target.value);
+      console.log("isValid ", isValid);
+      //isValid conditional
+      if (!isValid) {
+        setErrorMessage("Your email is invalid.");
+      } else {
+        setErrorMessage("");
+      }
+    } else {
+      // Either name or message are empty
+      if (!e.target.value.length) {
+        setErrorMessage(`${e.target.name} is required.`);
+      } else {
+        // everything checks out
+        setErrorMessage("");
+      }
+    }
     // without the spread operator ..., the formState object would be
     // overwritten to only contain the name:value pair
     // [e.target.name]  lets us DRY, so we can reuse setFormState
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    if (!errorMessage) {
+      setFormState({ ...formState, [e.target.name]: e.target.value });
+      console.log("State updated!");
+    }
+
+    //  console.log("e.target", e.target.name);
+
+    // console.log("errorMessage", errorMessage);
   }
   // placed outside the handleChange function because setFormState is asynchronous.
   //console.log(formState);
@@ -40,7 +71,7 @@ function ContactForm() {
           <input
             type="text"
             defaultValue={name}
-            onChange={handleChange}
+            onBlur={handleChange}
             name="name"
           />
         </div>
@@ -50,7 +81,7 @@ function ContactForm() {
           <input
             type="email"
             defaultValue={email}
-            onChange={handleChange}
+            onBlur={handleChange}
             name="email"
           />
         </div>
@@ -60,9 +91,14 @@ function ContactForm() {
           <textarea
             name="message"
             defaultValue={message}
-            onChange={handleChange}
+            onBlur={handleChange}
             rows="5"
           />
+          {errorMessage && (
+            <div>
+              <p className="error-text">{errorMessage}</p>
+            </div>
+          )}
         </div>
         <button type="submit">Submit</button>
       </form>
