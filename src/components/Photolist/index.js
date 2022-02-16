@@ -133,12 +133,14 @@ function PhotoList({ category }) {
     // current photo
     // Used ... to add the index: i key value pair
     setCurrentPhoto({ ...image, index: i });
-    setIsModalOpen(true);
+    // alternate t/f
+    setIsModalOpen(!isModalOpen);
   };
   return (
     <div>
       {/* If modal is open use modal */}
-      {isModalOpen && <Modal currentPhoto={currentPhoto} />}
+      {isModalOpen && (
+        <Modal currentPhoto={currentPhoto} onClose={toggleModal}/>)}
       <div className="flex-row">
         {currentPhotos.map((image, i) => (
           <img
